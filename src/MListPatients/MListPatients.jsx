@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MListPatients.css'; // استيراد ملف CSS لتنسيق المكون
 import profileImg from '../image/profile.png'; // استيراد صورة الملف الشخصي
 import editImg from '../image/edit.png'; // استيراد صورة التعديل
@@ -22,6 +23,8 @@ const MPatientList = () => {
     // إضافة المزيد من المرضى حسب الحاجة
   ]);
 
+  const navigate = useNavigate(); // استخدام useNavigate للتنقل
+
   // دالة لمعالجة تغييرات البحث
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value); // تحديث حالة البحث
@@ -31,6 +34,11 @@ const MPatientList = () => {
   const filteredPatients = patients.filter(patient =>
     patient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // دالة للتنقل إلى واجهة AddPatient
+  const handleAddPatientClick = () => {
+    navigate('/add-patient');
+  };
 
   return (
     <div className="patient-list-container">
@@ -45,7 +53,9 @@ const MPatientList = () => {
           value={searchTerm}
           onChange={handleSearchChange} // استدعاء الدالة عند تغيير القيمة
         />
-        <button className="patient-list-add-button">Add Patient</button>
+        <button className="patient-list-add-button" onClick={handleAddPatientClick}>
+          Add Patient
+        </button>
       </div>
       {/* حاوية الجدول */}
       <div className="patient-list-table-container">
@@ -78,3 +88,4 @@ const MPatientList = () => {
 };
 
 export default MPatientList;
+
